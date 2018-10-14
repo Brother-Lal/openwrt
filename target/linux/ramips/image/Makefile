@@ -174,6 +174,15 @@ define MkImageSysupgrade/squashfs
 	fi
 endef
 
+define Build/mksercommfw
+        $(STAGING_DIR_HOST)/bin/mksercommfw \
+                $@ \
+                $(SERCOMM_KERNEL_OFFSET) \
+                $(SERCOMM_HWID) \
+                $(SERCOMM_HWVER) \
+                $(SERCOMM_SWVER)
+endef
+
 # $(1), lowercase board name like "mt7620a_v22sg"
 # $(2), DTS filename without .dts extension
 # $(3), optional filename suffix, e.g. "-initramfs"

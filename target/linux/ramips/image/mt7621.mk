@@ -274,15 +274,19 @@ define Device/r6220
   PAGESIZE := 2048
   KERNEL_SIZE := 4096k
   KERNEL := $(KERNEL_DTB) | uImage lzma
-  IMAGE_SIZE := 28672k
-  UBINIZE_OPTS := -E 5
-  IMAGES := sysupgrade.tar kernel.bin rootfs.bin
-  IMAGE/sysupgrade.tar := sysupgrade-tar | append-metadata
-  IMAGE/kernel.bin := append-kernel
-  IMAGE/rootfs.bin := append-ubi | check-size $$$$(IMAGE_SIZE)
   DEVICE_TITLE := Netgear R6220
   DEVICE_PACKAGES := \
 	kmod-mt7603 kmod-mt76x2 kmod-usb3 kmod-usb-ledtrig-usbport wpad-mini
+  IMAGE_SIZE := 28672k
+  UBINIZE_OPTS := -E 5
+  SERCOMM_KERNEL_OFFSET := 200000
+  SERCOMM_HWID := AYA
+  SERCOMM_HWVER := A001
+  SERCOMM_SWVER := 1068
+  IMAGES += factory.img
+  IMAGE/default := append-kernel | pad-to $$$$(KERNEL_SIZE)| append-ubi | pad-rootfs
+  IMAGE/sysupgrade.bin := $$(IMAGE/default) | append-metadata | check-size $$$$(IMAGE_SIZE)
+  IMAGE/factory.img := $$(IMAGE/default) | mksercommfw
 endef
 TARGET_DEVICES += r6220
 

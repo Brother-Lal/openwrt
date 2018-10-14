@@ -4,15 +4,6 @@
 
 DEVICE_VARS += SERCOMM_KERNEL_OFFSET SERCOMM_HWID SERCOMM_HWVER SERCOMM_SWVER
 
-define Build/mksercommfw
-	$(STAGING_DIR_HOST)/bin/mksercommfw \
-		$@ \
-		$(SERCOMM_KERNEL_OFFSET) \
-		$(SERCOMM_HWID) \
-		$(SERCOMM_HWVER) \
-		$(SERCOMM_SWVER)
-endef
-
 define Device/tplink
   TPLINK_FLASHLAYOUT :=
   TPLINK_HWID :=
